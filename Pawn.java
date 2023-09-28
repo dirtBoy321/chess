@@ -7,8 +7,15 @@ public class Pawn extends ReturnPiece {
         pieceRank =rank;
 
     }
-    boolean isLegal(int file,int rank){
-        
-        return false;
+    boolean isLegal(PieceFile file,int rank){
+        //still need to account for moving 2 tiles first move
+        if(rank==pieceRank+1){
+            
+            return true;
+            //still need to account for diagnal  move
+        }else{
+           
+            return false;
+        }
     }
 }
