@@ -8,7 +8,7 @@ public class King extends ReturnPiece {
 
     }
 
-    boolean isLegal(int file,int rank){
+    boolean isLegal(PieceFile file,int rank){
         
         return false;
     }
