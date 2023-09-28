@@ -2,6 +2,9 @@ package chess;
 
 import java.util.ArrayList;
 
+import chess.ReturnPiece.PieceFile;
+import chess.ReturnPlay.Message;
+
 class ReturnPiece {
 	static enum PieceType {WP, WR, WN, WB, WQ, WK, 
 		            BP, BR, BN, BB, BK, BQ};
@@ -21,6 +24,15 @@ class ReturnPiece {
 		return pieceType == otherPiece.pieceType &&
 				pieceFile == otherPiece.pieceFile &&
 				pieceRank == otherPiece.pieceRank;
+	}
+	 boolean isLegal(PieceFile newFile, int newRank) {
+		//should never reach this
+		return false;
+	}
+	void movePeice(PieceFile newFile, int newRank){
+		// remove peace if one was located on new position  
+		//change peices location in bored
+		//remove peice from previous location on bored
 	}
 }
 
@@ -42,23 +54,38 @@ public class Chess {
 	int x;
 
 	
-	/**
-	 * Plays the next move for whichever player has the turn.
-	 * 
-	 * @param move String for next move, e.g. "a2 a3"
-	 * 
-	 * @return A ReturnPlay instance that contains the result of the move.
-	 *         See the section "The Chess class" in the assignment description for details of
-	 *         the contents of the returned ReturnPlay instance.
-	 */
 	public static ReturnPlay play(String move) {
-		
+		ReturnPlay play=new ReturnPlay();
+		//check for resign and draw
 
-		/* FILL IN THIS METHOD */
+	
+		//else  get  values for files and ranks
+		int prevFileIndex=getFileIndex(move.charAt(0)); 
+		int prevRankIndex=getRankIndex(move.charAt(1));
+		PieceFile newFile= PieceFile.valueOf(move.substring(3, 4));
+		int newRank= move.charAt(4)-48;
+
+		//check for check and check mate
+		//check if move is legal(stillneeds to check for turn)
+		if(bored[prevRankIndex][prevFileIndex]!=null){//check there is a peace at  location 
+			
+			
+			if(bored[prevRankIndex][prevFileIndex].isLegal(newFile,newRank)){
+				bored[prevRankIndex][prevFileIndex].movePeice(newFile, newRank);
+			}
+		}else{
+			//player picked a location with no peice on it
+			play.message=Message.ILLEGAL_MOVE;
+		}
 		
-		/* FOLLOWING LINE IS A PLACEHOLDER TO MAKE COMPILER HAPPY */
-		/* WHEN YOU FILL IN THIS METHOD, YOU NEED TO RETURN A ReturnPlay OBJECT */
-		return null;
+		//put all peices still on bored in array list for return statment, message will be set earlier in function
+		for(int i=0;i<8;i++){
+			for(int j=0;j<8;j++){
+				play.piecesOnBoard.add(bored[i][j]);
+			}
+		}
+
+		return play;
 	}
 	
 	
@@ -113,6 +140,39 @@ public class Chess {
 		bored[7][7]= new Rook(ReturnPiece.PieceType.WR,ReturnPiece.PieceFile.h,1);
 
 	}
- 
+	private static int  getFileIndex(char x){
+		
+		//converts a-0, b-1, etc
+		return x-97;
+	}
+	private static int getRankIndex(char x){
+		if(x=='1'){
+			return 7;
+		}
+		else if(x=='2'){
+			return 6;
+		}
+		else if(x=='3'){
+			return 5;
+		}
+		else if(x=='4'){
+			return 4;
+		}
+		else if(x=='5'){
+			return 3;
+		}
+		else if(x=='6'){
+			return 2;
+		}
+		else if(x=='7'){
+			return 1;
+		}
+		else if(x=='8'){
+			return 0;
+		}else{
+			System.out.println("invled input entered");
+			return 20;//should never reach this lines
+		}
+	}
 	
 }
