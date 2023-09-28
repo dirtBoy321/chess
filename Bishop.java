@@ -9,7 +9,7 @@ public class Bishop extends ReturnPiece {
 
     }
 
-    boolean isLegal(int file,int rank){
+     boolean isLegal(PieceFile file,int rank){
         
         return false;
     }
