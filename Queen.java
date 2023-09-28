@@ -7,7 +7,7 @@ public class Queen extends ReturnPiece{
         pieceRank =rank;
 
     }
-    boolean isLegal(int file,int rank){
+    boolean isLegal(PieceFile file,int rank){
         
         return false;
     }
