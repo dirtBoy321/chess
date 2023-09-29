@@ -1,21 +1,30 @@
 package chess;
 
-public class Pawn extends ReturnPiece {
-    public Pawn(PieceType type,PieceFile file,int rank){
-        pieceType=type;
-        pieceFile=file;
-        pieceRank =rank;
+import chess.ReturnPiece.PieceType;
+
+public class Pawn extends Piece {
+    public Pawn(Color player,int  file,int rank){
+        player=this.player;
+        fileIndex=file;
+        rankIndex =rank;
 
     }
-    boolean isLegal(PieceFile file,int rank){
-        //still need to account for moving 2 tiles first move
-        if(rank==pieceRank+1){
-            
-            return true;
-            //still need to account for diagnal  move
+    ReturnPiece getReturnPiece(){
+        ReturnPiece tempPiece = new ReturnPiece();
+        tempPiece.pieceFile=getFile(fileIndex);
+        tempPiece.pieceRank=getrank(rankIndex);
+        if(player.equals(Color.white)){
+            tempPiece.pieceType=PieceType.WP;
         }else{
-           
-            return false;
+            tempPiece.pieceType=PieceType.BP;
         }
+        return tempPiece;
     }
+
+
+     boolean isLegal(int newFilefileIndex, int newRankIndex){
+        
+        return true;
+    }
+    
 }
