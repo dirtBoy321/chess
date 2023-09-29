@@ -1,15 +1,30 @@
 package chess;
 
-public class Rook extends ReturnPiece{
-    
-    public Rook(PieceType type,PieceFile file,int rank){
-        pieceType=type;
-        pieceFile=file;
-        pieceRank =rank;
+import chess.ReturnPiece.PieceType;
+
+public class Rook extends Piece {
+    public Rook(Color player,int  file,int rank){
+        player=this.player;
+        fileIndex=file;
+        rankIndex =rank;
 
     }
-    boolean isLegal(PieceFile file,int rank){
-        
-        return false;
+
+   ReturnPiece getReturnPiece(){
+        ReturnPiece tempPiece = new ReturnPiece();
+        tempPiece.pieceFile=getFile(fileIndex);
+        tempPiece.pieceRank=getrank(rankIndex);
+        if(player.equals(Color.white)){
+            tempPiece.pieceType=PieceType.WR;
+        }else{
+            tempPiece.pieceType=PieceType.BR;
+        }
+        return tempPiece;
     }
+
+     boolean isLegal(int newFilefileIndex, int newRankIndex){
+        
+        return true;
+    }
+    
 }
