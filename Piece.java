@@ -8,14 +8,23 @@ public abstract class Piece {
     int fileIndex;
     Color player;
 
-    boolean isLegal(int newFilefileIndex, int newRankIndex ){
+    boolean isLegal(int newFileIndex, int newRankIndex ){
         return false;
 
     }
-    boolean checkPath(int newFilefileIndex, int newRankIndex){
+    boolean checkPath(int newFileIndex, int newRankIndex){
+        //inculuding tile ypuare moving onto tomakesure nothing is int itsway to move
         return false;
     }
-    void movePiece(int newFilefileIndex, int newRankIndex){}
+    void movePiece(int newFileIndex, int newRankIndex){
+        
+            Chess.bored[newFileIndex][newRankIndex]=Chess.bored[fileIndex][rankIndex];
+            Chess.bored[fileIndex][rankIndex]=null;
+            fileIndex=newFileIndex;
+            rankIndex=newRankIndex;
+
+    
+    }
 
     ReturnPiece getReturnPiece(){
         return null;
