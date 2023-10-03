@@ -42,12 +42,13 @@ public class Chess {
 	
 	enum Player { white, black }
 
-	private  static Piece[][] bored= new Piece[8][8];
+	static Piece[][] bored= new Piece[8][8];
 	
 
 	
 	public static ReturnPlay play(String move) {
 		ReturnPlay play=new ReturnPlay();
+		play.piecesOnBoard = new ArrayList<ReturnPiece>();
 		//check for resign and draw
 
 	
@@ -62,7 +63,7 @@ public class Chess {
 		if(bored[prevRankIndex][prevFileIndex]!=null){//check there is a peace at  location 
 			
 			if(bored[prevRankIndex][prevFileIndex].isLegal(newFileIndex,newRankIndex)){
-				System.out.println("islegal");
+				bored[prevRankIndex][prevFileIndex].movePiece(newFileIndex, newRankIndex);
 
 			}else{
 				//player made an illigal move
@@ -77,6 +78,7 @@ public class Chess {
 		for(int i=0;i<8;i++){
 			for(int j=0;j<8;j++){
 				if(bored[i][j]!=null){
+					System.out.println(bored[i][j].getReturnPiece());
 					play.piecesOnBoard.add(bored[i][j].getReturnPiece());
 				}
 			}
@@ -166,5 +168,11 @@ public class Chess {
 			return 20;//should never reach this lines
 		}
 	}
+	
+
+
+
+
+
 	
 }
