@@ -42,6 +42,8 @@ public class Chess {
 	
 	enum Player { white, black }
 
+	static Player turn=Player.white;
+
 	static Piece[][] bored= new Piece[8][8];
 	
 
@@ -61,14 +63,20 @@ public class Chess {
 		//check for check and check mate
 		//check if move is legal(stillneeds to check for turn)
 		if(bored[prevRankIndex][prevFileIndex]!=null){//check there is a peace at  location 
-			
+			if((bored[prevRankIndex][prevFileIndex].player==Color.white&&turn==Player.white)||(bored[prevRankIndex][prevFileIndex].player==Color.black&&turn==Player.black)){
+		
 			if(bored[prevRankIndex][prevFileIndex].isLegal(newFileIndex,newRankIndex)){
 				bored[prevRankIndex][prevFileIndex].movePiece(newFileIndex, newRankIndex);
+				switchturn();
 
 			}else{
 				//player made an illigal move
 				play.message=Message.ILLEGAL_MOVE;
 			}
+		}else{
+			//wrong turn
+			play.message=Message.ILLEGAL_MOVE;
+		}
 		}else{
 			//player picked a location with no peice on it
 			play.message=Message.ILLEGAL_MOVE;
@@ -78,16 +86,23 @@ public class Chess {
 		for(int i=0;i<8;i++){
 			for(int j=0;j<8;j++){
 				if(bored[i][j]!=null){
-					System.out.println(bored[i][j].getReturnPiece());
 					play.piecesOnBoard.add(bored[i][j].getReturnPiece());
 				}
 			}
 		}
 
+		
+
 		return play;
 	}
 	
-	
+	private static void switchturn(){
+		if(turn==Player.white){
+			turn = Player.black;
+		}else if(turn==Player.black){
+			turn = Player.white;
+		}
+	}
 	
 	public static void start() {
 	emptyBored();
