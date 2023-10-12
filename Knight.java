@@ -4,7 +4,7 @@ import chess.ReturnPiece.PieceType;
 
 public class Knight extends Piece {
     public Knight(Color player,int  file,int rank){
-        player=this.player;
+        this.player=player;
         fileIndex=file;
         rankIndex =rank;
 
@@ -22,9 +22,14 @@ public class Knight extends Piece {
     }
 
 
-    boolean isLegal(int newFilefileIndex, int newRankIndex){
-         if(((rankIndex+1==newRankIndex||rankIndex-1==newRankIndex)&&(fileIndex+2==newRankIndex||fileIndex-2==newRankIndex))||
-            ((rankIndex+2==newRankIndex||rankIndex-2==newRankIndex)&&(fileIndex+1==newRankIndex||fileIndex-1==newRankIndex))){
+    boolean isLegal(int newFileIndex, int newRankIndex){
+         if(((rankIndex+1==newRankIndex||rankIndex-1==newRankIndex)&&(fileIndex+2==newFileIndex||fileIndex-2==newFileIndex))||
+            ((rankIndex+2==newRankIndex||rankIndex-2==newRankIndex)&&(fileIndex+1==newFileIndex||fileIndex-1==newFileIndex))){
+                if(Chess.bored[newRankIndex][newFileIndex]!=null){
+                    if(Chess.bored[newRankIndex][newFileIndex].player==player){//check that you are nottaking
+                        return false;
+                    }
+                }
              return true;
          }else{
              return false;
