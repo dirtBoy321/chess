@@ -4,7 +4,7 @@ import chess.ReturnPiece.PieceType;
 
 public class King extends Piece {
     public King(Color player,int  file,int rank){
-        player=this.player;
+        this.player=player;
         fileIndex=file;
         rankIndex =rank;
 
@@ -22,9 +22,19 @@ public class King extends Piece {
         return tempPiece;
     }
 
-     boolean isLegal(int newFilefileIndex, int newRankIndex){
+     boolean isLegal(int newFileIndex, int newRankIndex){
+
+        if((newRankIndex==rankIndex+1)||(newRankIndex==rankIndex-1)||(newFileIndex==fileIndex-1)||(newFileIndex==fileIndex+1)){
+            if(Chess.bored[newRankIndex][newFileIndex]!=null){
+                if(Chess.bored[newRankIndex][newFileIndex].player == Chess.bored[rankIndex][fileIndex].player){
+                    return false;
+                }
+            }else{
+                return true;
+            }
+        }
         
-        return true;
+        return false;
     }
     
 }
