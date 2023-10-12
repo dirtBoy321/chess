@@ -51,17 +51,21 @@ public class Chess {
 	public static ReturnPlay play(String move) {
 		ReturnPlay play=new ReturnPlay();
 		play.piecesOnBoard = new ArrayList<ReturnPiece>();
-		//check for resign and draw
-
-	
+		//check for resign
+		if(move.equals("resign")){
+			if(turn==Player.white){
+				play.message=Message.RESIGN_BLACK_WINS;
+			}else if(turn==Player.black){
+				play.message=Message.RESIGN_WHITE_WINS;
+			}
+		}else{//read in move values
 		//else  get  values for files and ranks
 		int prevFileIndex=getFileIndex(move.charAt(0)); 
 		int prevRankIndex=getRankIndex(move.charAt(1));
 		int newFileIndex= getFileIndex(move.charAt(3));
 		int newRankIndex= getRankIndex(move.charAt(4));
 
-		//check for check and check mate
-		//check if move is legal(stillneeds to check for turn)
+		//check if move is legal
 		if(bored[prevRankIndex][prevFileIndex]!=null){//check there is a peace at  location 
 			if((bored[prevRankIndex][prevFileIndex].player==Color.white&&turn==Player.white)||(bored[prevRankIndex][prevFileIndex].player==Color.black&&turn==Player.black)){
 		
@@ -81,8 +85,10 @@ public class Chess {
 			//player picked a location with no peice on it
 			play.message=Message.ILLEGAL_MOVE;
 		}
+		//check for draw
+	}
 		
-		//put all peices still on bored in array list for return statment, message will be set earlier in function
+		//put all peices still on bored in array list 
 		for(int i=0;i<8;i++){
 			for(int j=0;j<8;j++){
 				if(bored[i][j]!=null){
