@@ -4,7 +4,7 @@ import chess.ReturnPiece.PieceType;
 
 public class Rook extends Piece {
     public Rook(Color player,int  file,int rank){
-        player=this.player;
+        this.player=player;
         fileIndex=file;
         rankIndex =rank;
 
@@ -22,9 +22,59 @@ public class Rook extends Piece {
         return tempPiece;
     }
 
-     boolean isLegal(int newFilefileIndex, int newRankIndex){
+     boolean isLegal(int newFileIndex, int newRankIndex){
+        int big;
+        if(newRankIndex==rankIndex&&newFileIndex!=fileIndex){//move  horisontily
         
-        return true;
+             big =getLarger(fileIndex,newFileIndex);
+
+             for(int i=getSmaller(fileIndex,newFileIndex)+1;i<big-1;i++){//check if path is blocked
+                if(Chess.bored[rankIndex][i]!=null){
+                    return false;
+                }
+
+             }
+             if(Chess.bored[newRankIndex][newFileIndex]!=null){//check not moving onto ally
+                if(Chess.bored[newRankIndex][newFileIndex].player==Chess.bored[rankIndex][fileIndex].player){
+                    return  false;
+                }
+                
+             }
+             return true;
+        }
+        else if(newFileIndex==fileIndex&&newRankIndex!=rankIndex){//move vertically
+        
+            big =getLarger(newRankIndex, rankIndex);
+
+             for(int i=getSmaller(newRankIndex, rankIndex)+1;i<big-1;i++){//check if path is blocked
+                if(Chess.bored[i][fileIndex]!=null){
+                    return false;
+                }
+
+             }
+             if(Chess.bored[newRankIndex][newFileIndex]!=null){//check not moving onto ally
+                if(Chess.bored[newRankIndex][newFileIndex].player==Chess.bored[rankIndex][fileIndex].player){
+                    return  false;
+                }
+                
+             }
+             return true;
+        }
+        return false;
     }
-    
+    private int getSmaller(int x,int y){
+        if(x<y){
+            return x;
+        }else{
+            return y;
+        }
+    }
+private int getLarger(int x,int y){
+        if(x>y){
+            return x;
+        }else{
+            return y;
+        }
+    }
+
 }
