@@ -179,7 +179,7 @@ public class Chess {
 		else if(x=='8'){
 			return 0;
 		}else{
-			System.out.println("invled input entered");
+
 			return 20;//should never reach this lines
 		}
 	}
