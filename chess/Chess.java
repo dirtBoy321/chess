@@ -132,8 +132,8 @@ public class Chess {
 		bored[0][0]= new Rook(Color.black,0,0);
 		bored[0][1]= new Knight(Color.black,1,0);
 		bored[0][2]= new Bishop(Color.black,2,0);
-		bored[0][3]= new King(Color.black,3,0);
-		bored[0][4]= new Queen(Color.black,4,0);
+		bored[0][3]= new Queen(Color.black,3,0);
+		bored[0][4]= new King(Color.black,4,0);
 		bored[0][5]= new Bishop(Color.black,5,0);
 		bored[0][6]= new Knight(Color.black,6,0);
 		bored[0][7]= new Rook(Color.black,7,0);
@@ -142,8 +142,8 @@ public class Chess {
 		bored[7][0]= new Rook(Color.white,0,7);
 		bored[7][1]= new Knight(Color.white,1,7);
 		bored[7][2]= new Bishop(Color.white,2,7);
-		bored[7][3]= new King(Color.white,3,7);
-		bored[7][4]= new Queen(Color.white,4,7);
+		bored[7][3]= new Queen(Color.white,3,7);
+		bored[7][4]= new King(Color.white,4,7);
 		bored[7][5]= new Bishop(Color.white,5,7);
 		bored[7][6]= new Knight(Color.white,6,7);
 		bored[7][7]= new Rook(Color.white,7,7);
