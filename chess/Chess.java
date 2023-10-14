@@ -86,6 +86,11 @@ public class Chess {
 			play.message=Message.ILLEGAL_MOVE;
 		}
 		//check for draw
+		if(play.message!=Message.ILLEGAL_MOVE){
+			if("draw".equals(move.substring(move.length()-4,move.length()))){
+				play.message=Message.DRAW;
+			}
+		}
 	}
 		
 		//put all peices still on bored in array list 
