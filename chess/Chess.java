@@ -71,6 +71,11 @@ public class Chess {
 		
 			if(bored[prevRankIndex][prevFileIndex].isLegal(newFileIndex,newRankIndex)){
 				bored[prevRankIndex][prevFileIndex].movePiece(newFileIndex, newRankIndex);
+
+				if((bored[newRankIndex][newFileIndex] instanceof Pawn) &&(newRankIndex==0||newRankIndex==7)){//handle pawnpramotion
+					promotePawn(move,bored[newRankIndex][newFileIndex],turn);
+					
+				}
 				switchturn();
 
 			}else{
@@ -194,11 +199,31 @@ public class Chess {
 			return 20;//should never reach this lines
 		}
 	}
-	
-
-
-
-
-
+	private static void promotePawn(String move, Piece pawn,Player player){
+		int rank=pawn.rankIndex;
+		int file=pawn.fileIndex;
+		Color color;
+		char x='Q';
+		if(player==Player.white){
+			color=Color.white;
+		}else{
+			color=Color.black;
+		}
+		if(move.length()>=7){
+		 	x=move.charAt(6);
+		}
+		if(x=='N'){
+			bored[rank][file]= new Knight(color, file, rank);
+		}else if(x=='B'){
+			bored[rank][file]= new Bishop(color, file, rank);
+		}else if(x=='Q'){
+			bored[rank][file]= new Queen(color, file, rank);
+		}else if(x=='R'){
+			bored[rank][file]= new Rook(color, file, rank);
+		}else{
+			bored[rank][file]= new Queen(color, file, rank);
+		}
+		
+	}
 	
 }
