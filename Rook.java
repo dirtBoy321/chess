@@ -28,7 +28,7 @@ public class Rook extends Piece {
         
              big =getLarger(fileIndex,newFileIndex);
 
-             for(int i=getSmaller(fileIndex,newFileIndex)+1;i<big-1;i++){//check if path is blocked
+             for(int i=getSmaller(fileIndex,newFileIndex)+1;i<big;i++){//check if path is blocked
                 if(Chess.bored[rankIndex][i]!=null){
                     return false;
                 }
@@ -46,7 +46,7 @@ public class Rook extends Piece {
         
             big =getLarger(newRankIndex, rankIndex);
 
-             for(int i=getSmaller(newRankIndex, rankIndex)+1;i<big-1;i++){//check if path is blocked
+             for(int i=getSmaller(newRankIndex, rankIndex)+1;i<big;i++){//check if path is blocked
                 if(Chess.bored[i][fileIndex]!=null){
                     return false;
                 }
