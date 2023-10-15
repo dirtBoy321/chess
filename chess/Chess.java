@@ -51,6 +51,7 @@ public class Chess {
 	public static ReturnPlay play(String move) {
 		ReturnPlay play=new ReturnPlay();
 		play.piecesOnBoard = new ArrayList<ReturnPiece>();
+		move=move.trim();
 		//check for resign
 		if(move.equals("resign")){
 			if(turn==Player.white){
@@ -225,5 +226,5 @@ public class Chess {
 		}
 		
 	}
-	
+
 }
