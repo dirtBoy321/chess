@@ -47,6 +47,8 @@ public class Chess {
 	static Player turn=Player.white;
 
 	static Piece[][] bored= new Piece[8][8];
+
+	static boolean checkFlag=false;
 	
 
 	
@@ -96,6 +98,7 @@ public class Chess {
 		if(play.message!=Message.ILLEGAL_MOVE){
 			if(inCheck(turn)){//check for check
 				play.message=Message.CHECK;
+				checkFlag=true;
 			}	
 		}
 
