@@ -7,6 +7,7 @@ public abstract class Piece {
     int rankIndex;
     int fileIndex;
     Color player;
+    boolean moved=false;
 
     abstract  boolean isLegal(int newFileIndex, int newRankIndex );
         
@@ -17,6 +18,7 @@ public abstract class Piece {
             Chess.bored[rankIndex][fileIndex]=null;
             fileIndex=newFileIndex;
             rankIndex=newRankIndex;
+            moved=true;
 
     
     }
