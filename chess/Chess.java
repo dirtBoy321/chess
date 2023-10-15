@@ -1,3 +1,5 @@
+//Joshua Clayton
+// put your name here
 package chess;
 
 import java.util.ArrayList;
@@ -91,6 +93,12 @@ public class Chess {
 			//player picked a location with no peice on it
 			play.message=Message.ILLEGAL_MOVE;
 		}
+		if(play.message!=Message.ILLEGAL_MOVE){
+			if(inCheck(turn)){//check for check
+				play.message=Message.CHECK;
+			}	
+		}
+
 		//check for draw
 		if(play.message!=Message.ILLEGAL_MOVE){
 			if("draw".equals(move.substring(move.length()-4,move.length()))){
@@ -225,6 +233,38 @@ public class Chess {
 			bored[rank][file]= new Queen(color, file, rank);
 		}
 		
+	}
+	private static boolean inCheck(Player turn){
+	
+			Piece king=findKing(turn);
+			if(king==null){
+				return false;
+			}
+			for(int i=0;i<8;i++){
+				for(int j=0;j<8;j++){
+					if(bored[i][j]!=null){
+					if(bored[i][j].isLegal(king.fileIndex, king.rankIndex)){
+						return true;
+					}
+				}
+				}
+			}
+		
+		return false;
+	}
+	private static Piece findKing(Player turn){
+		for(int i=0;i<8;i++){
+			for(int j=0;j<8;j++){
+				if(bored[i][j] instanceof King){
+					if(turn==Player.white&&bored[i][j].player==Color.white){
+						return bored[i][j];
+					}else if(turn==Player.black&&bored[i][j].player==Color.black){
+						return bored[i][j];
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 }
