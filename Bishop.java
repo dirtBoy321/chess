@@ -59,8 +59,10 @@ public class Bishop extends Piece {
 
     //y = rank, x = file
     private int Slope(int y2, int y1, int x2, int x1){
+        if(x2-x1==0){
+            return 0;
+        }
         return (y2 - y1) / (x2 - x1);
     }
     
 }
-
