@@ -28,21 +28,32 @@ public class Bishop extends Piece {
         int slope = Slope(newFileIndex,fileIndex,newRankIndex, rankIndex);
         // gives us the slope for the bishop ; legal moves are 1 or -1
         if((slope == 1) || (slope == -1)){//move diagonally 
-            int rankincrement;
-            int fileincremtnt;
-            if(rankIndex<newRankIndex&&fileIndex<newFileIndex){//peice moved up and right
-                //set file and rankincrementvalues to1 or-1
+            int rankincrement=1;
+            int fileincremtnt=1;
+            if(rankIndex<newRankIndex&&fileIndex<newFileIndex){//peice moved down and right
+                fileincremtnt=1;
+                rankincrement=1;
             }
-            if(rankIndex>newRankIndex&&fileIndex<newFileIndex){ //peice moved down and right
-                //set file and rankincrementvalues to1 or-1
+            else if(rankIndex>newRankIndex&&fileIndex<newFileIndex){ //peice moved up and right
+                fileincremtnt=1;
+                rankincrement=-1;
             }
-            if(rankIndex<newRankIndex&&fileIndex>newFileIndex){//peice moved up and left
-                //set file and rankincrementvalues to1 or-1
+            else if(rankIndex<newRankIndex&&fileIndex>newFileIndex){//peice moved down and left
+                fileincremtnt=-1;
+                rankincrement=1;
             }
-            if(rankIndex>newRankIndex&&fileIndex>newFileIndex){//peice moved down and left
-                //set file and rankincrementvalues to1 or-1
+            else if(rankIndex>newRankIndex&&fileIndex>newFileIndex){//peice moved up and left
+                fileincremtnt=-1;
+                rankincrement=-1;
+                
             }
-            // dubble for loop that incrents file and rank by the values above until at the new ones
+            int j=fileIndex+fileincremtnt;;
+            for(int i=rankIndex+rankincrement;i!=newRankIndex;i=i+rankincrement){ 
+                if(Chess.bored[i][j]!=null){
+                    return false; 
+                }
+                j=j+fileincremtnt;
+            }
 
             if(Chess.bored[newRankIndex][newFileIndex]!=null){//check not moving onto ally ; SHOULD ALWAYS BE THE SAME FOR EVERY CHESS PIECE
                  if(Chess.bored[newRankIndex][newFileIndex].player==Chess.bored[rankIndex][fileIndex].player){
