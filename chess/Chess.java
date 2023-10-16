@@ -1,6 +1,6 @@
 //Joshua Clayton
-// put your name here
 package chess;
+
 
 import java.util.ArrayList;
 import chess.Piece.Color;
@@ -47,8 +47,17 @@ public class Chess {
 	static Player turn=Player.white;
 
 	static Piece[][] bored= new Piece[8][8];
+	
+	static Piece checkDst;
 
 	static boolean checkFlag=false;
+
+	static int checkCount=0;
+
+	static Piece enpasantablPiece=null;
+	
+
+
 	
 
 	
@@ -56,6 +65,15 @@ public class Chess {
 		ReturnPlay play=new ReturnPlay();
 		play.piecesOnBoard = new ArrayList<ReturnPiece>();
 		move=move.trim();
+
+		if(enpasantablPiece!=null){
+			if(enpasantablPiece.player==Color.white&&turn==Player.white){
+				enpasantablPiece=null;
+			}else if(enpasantablPiece.player==Color.black&&turn==Player.black){
+				enpasantablPiece=null;
+			}
+		}
+
 		//check for resign
 		if(move.equals("resign")){
 			if(turn==Player.white){
@@ -69,8 +87,11 @@ public class Chess {
 		int prevRankIndex=getRankIndex(move.charAt(1));
 		int newFileIndex= getFileIndex(move.charAt(3));
 		int newRankIndex= getRankIndex(move.charAt(4));
-
-		//check if move is legal
+		if(checkFlag==true){//makecopy of bored
+			
+			checkDst=bored[newRankIndex][newFileIndex];
+		}
+		
 		if(bored[prevRankIndex][prevFileIndex]!=null){//check there is a peace at  location 
 			if((bored[prevRankIndex][prevFileIndex].player==Color.white&&turn==Player.white)||(bored[prevRankIndex][prevFileIndex].player==Color.black&&turn==Player.black)){
 		
@@ -95,13 +116,39 @@ public class Chess {
 			//player picked a location with no peice on it
 			play.message=Message.ILLEGAL_MOVE;
 		}
-		if(play.message!=Message.ILLEGAL_MOVE){
-			if(inCheck(turn)){//check for check
-				play.message=Message.CHECK;
-				checkFlag=true;
-			}	
-		}
+		if(play.message!=Message.ILLEGAL_MOVE){//handles check senerios
+			if(checkFlag==true){//if already in check
+				switchturn();
+				if(inCheck(turn)){//still in check
+					play.message=Message.ILLEGAL_MOVE;
+					//reset bored
+					bored[newRankIndex][newFileIndex].movePiece(prevFileIndex,prevRankIndex);
+					bored[newRankIndex][newFileIndex]=checkDst;
+    				
+				}else{
+					checkFlag=false;
+					checkCount=0;
+					switchturn();
+				}
 
+			}else{
+				
+				if(inCheck(turn)){//check for check
+					play.message=Message.CHECK;
+					checkFlag=true;
+				}	
+			}
+		}
+		if(checkFlag==true){//check for check mate
+			if(inCheckmate(turn)){
+				if(turn==Player.white){
+					play.message=Message.CHECKMATE_BLACK_WINS;
+				}else if(turn==Player.black){
+					play.message=Message.CHECKMATE_WHITE_WINS;
+				}
+		}
+	}
+	
 		//check for draw
 		if(play.message!=Message.ILLEGAL_MOVE){
 			if("draw".equals(move.substring(move.length()-4,move.length()))){
@@ -238,7 +285,8 @@ public class Chess {
 		
 	}
 	private static boolean inCheck(Player turn){
-	
+			checkCount=0;
+			boolean returnVal=false;
 			Piece king=findKing(turn);
 			if(king==null){
 				return false;
@@ -247,13 +295,14 @@ public class Chess {
 				for(int j=0;j<8;j++){
 					if(bored[i][j]!=null){
 					if(bored[i][j].isLegal(king.fileIndex, king.rankIndex)){
-						return true;
+						checkCount++;
+						returnVal= true;
 					}
 				}
 				}
 			}
 		
-		return false;
+		return returnVal;
 	}
 	private static Piece findKing(Player turn){
 		for(int i=0;i<8;i++){
@@ -269,5 +318,49 @@ public class Chess {
 		}
 		return null;
 	}
-
+private static boolean inCheckmate(Player turn){
+	Piece king=findKing(turn);
+	Piece temp;
+	int prevrank;
+	int prevfile;
+	if(checkCount==1){
+		prevrank=king.rankIndex;
+		prevfile=king.fileIndex;
+		for(int i=king.rankIndex-1;i<2;i++){
+			for(int j=king.fileIndex-1;j<2;j++){
+				temp =bored[i][j];
+				if(king.isLegal(j, i)){
+					king.movePiece(j,i);
+					if(inCheck(turn)){
+						king.movePiece(prevfile,prevrank);
+						bored[i][j]=temp;
+					}else{
+						return false;
+					}
+				}
+			}
+		}
+		//check if there iss possible block
+	}else if(checkCount>1){
+		prevrank=king.rankIndex;
+		prevfile=king.fileIndex;
+		for(int i=king.rankIndex-1;i<2;i++){
+			for(int j=king.fileIndex-1;j<2;j++){
+				temp =bored[i][j];
+				if(king.isLegal(j, i)){
+					king.movePiece(j,i);
+					if(inCheck(turn)){
+						king.movePiece(prevfile,prevrank);
+						bored[i][j]=temp;
+					}else{
+						return false;
+					}
+				}
+			}
+		}
+	}else{
+		return false;
+	}
+	return false;
+}
 }
