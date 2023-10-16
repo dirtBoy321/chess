@@ -37,7 +37,7 @@ public class Pawn extends Piece {
                 }
             }
             //if check for  diagnal attack
-            if((newRankIndex==rankIndex-1)&&(newFileIndex==fileIndex+1||newFileIndex==fileIndex+1)){
+            if((newRankIndex==rankIndex-1)&&(newFileIndex==fileIndex+1||newFileIndex==fileIndex-1)){
                 if(Chess.bored[newRankIndex][newFileIndex]!=null){
                     if(Chess.bored[newRankIndex][newFileIndex].player==Color.black){
                         return true;
@@ -59,7 +59,7 @@ public class Pawn extends Piece {
                 }
             }
             //if check for  diagnal attack
-            if((newRankIndex==rankIndex+1)&&(newFileIndex==fileIndex+1||newFileIndex==fileIndex+1)){
+            if((newRankIndex==rankIndex+1)&&(newFileIndex==fileIndex+1||newFileIndex==fileIndex-1)){
                 if(Chess.bored[newRankIndex][newFileIndex]!=null){
                     if(Chess.bored[newRankIndex][newFileIndex].player==Color.white){
                         return true;
