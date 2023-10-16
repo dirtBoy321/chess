@@ -1,4 +1,3 @@
-
 package chess;
 
 import chess.ReturnPiece.PieceType;
@@ -70,6 +69,8 @@ public class King extends Piece {
                 if(Chess.bored[newRankIndex][newFileIndex].player == Chess.bored[rankIndex][fileIndex].player){
                     return false;
                 }
+                return true;
+                
             }else{
                 
                 return true;
