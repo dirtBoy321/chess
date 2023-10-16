@@ -181,7 +181,8 @@ public class Chess {
 	
 	public static void start() {
 	emptyBored();
-	setBored();	
+	setBored();
+	turn=Player.white;
 	}
 
 	private static void emptyBored(){
